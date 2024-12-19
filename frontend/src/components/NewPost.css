@@ -1,13 +1,9 @@
-.user-status-container {
+.new-post-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-}
-  
-.status-input {
-  width: 28rem;
-  margin-bottom: 2rem;
+  margin: 2rem;
 }
 
 .new-post-input {
