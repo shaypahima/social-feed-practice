@@ -1,0 +1,26 @@
+.feeds-container {
+  margin: 2rem;
+  padding: 1rem;
+  width: 32rem;
+}
+
+.status-input {
+  width: 28rem;
+  margin-bottom: 2rem;
+}
+
+.new-post-input {
+  width: 34rem;
+  height: 6rem;
+}
+.new-post-form button {
+  width: 6rem;
+  margin-top: 1rem;
+  align-self: flex-end;
+}
+
+.new-post-form {
+  display: flex;
+  width: 30rem;
+  flex-direction: column;
+}
