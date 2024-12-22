@@ -12,7 +12,7 @@ import {
   Message,
   Pagination,
 } from "rsuite";
-import "./posts.css";
+import "../styles/Posts.css";
 
 export default function Posts() {
   const [activePage, setActivePage] = useState(1);

@@ -6,7 +6,7 @@ import {
   Input,
   Stack,
 } from "rsuite";
-import "./UserStatus.css";
+import "../styles/UserStatus.css";
 
 export default function UserStatus() {
   const { data: user, isError, isFetching } = useQuery({

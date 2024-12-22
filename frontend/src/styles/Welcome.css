@@ -1,0 +1,108 @@
+.welcome-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  margin-top: 7rem;
+  /* align-items: center; */
+  padding: 2rem;
+
+}
+
+.welcome-content {
+  max-width: 1200px;
+  text-align: center;
+}
+
+.welcome-title {
+  font-size: 3rem;
+  color: #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.welcome-subtitle {
+  font-size: 1.2rem;
+  color: #b0b0b0;
+  margin-bottom: 3rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.feature-card {
+  background: #2d3436;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card i {
+  font-size: 2rem;
+  color: #60a5fa;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  color: #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.feature-card p {
+  color: #9ca3af;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background-color: #60a5fa;
+  color: #1a1a1a;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #60a5fa;
+  border: 2px solid #60a5fa;
+} 
+.login-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #007bff;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: #0056b3;
+}

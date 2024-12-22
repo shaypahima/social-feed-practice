@@ -3,7 +3,7 @@ import { forwardRef, useState } from "react";
 import { Form, Input, Modal, Button, Stack } from "rsuite";
 import { getLoggedInUser } from "../util/http";
 import axios from "axios";
-import "./NewPostModel.css";
+import "../styles/NewPostModel.css";
 
 const Textarea = forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />
