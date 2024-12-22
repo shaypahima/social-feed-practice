@@ -1,13 +1,15 @@
 import UserStatus from "../components/UserStatus";
-import NewPost from "../components/NewPost";
 import { Container } from "rsuite";
+import NewPostModel from "../components/NewPostModel";
+import Posts from "../components/Posts";
 export default function FeedPage(){
 
   return(
     <>
       <Container>
         <UserStatus/>
-        <NewPost/>
+        <NewPostModel/>
+        <Posts/>
       </Container>
     </>
   )

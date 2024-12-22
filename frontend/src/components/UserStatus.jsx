@@ -9,11 +9,10 @@ import {
 import "./UserStatus.css";
 
 export default function UserStatus() {
-  const { data, isError, isFetching } = useQuery({
+  const { data: user, isError, isFetching } = useQuery({
     queryKey: ["user"],
     queryFn: getLoggedInUser,
   });
-  const user = data?.user ?? undefined;
 
   const handleSave = (value) => {
     console.log(value);

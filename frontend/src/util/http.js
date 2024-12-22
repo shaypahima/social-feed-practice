@@ -1,26 +1,31 @@
 import { QueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 export const queryClient = new QueryClient
 
 export async function getLoggedInUser() {
-  const response = await fetch("http://192.168.1.100:3000/user");
-  console.log('response', response);
-  if(!response.ok){
+  const response = await axios.get("http://192.168.1.100:3000/user");
+  if (response.status !== 200) {
     return null;
   }
-  return response.json();
-  
+  return response.data.user;
 }
 
-
-export async function login(){
-//TODO
+export async function getPosts() {
+  const response = await axios.get("http://192.168.1.100:3000/posts");
+  if (response.status !== 200) {
+    return null;
+  }
+  return response.data.posts;
 }
 
-export async function signup(){
-//TODO
+export async function login() {
+  //TODO
 }
 
-export async function logout(){ 
-  console.log('logout');
+export async function signup() {
+  //TODO
+}
+
+export async function logout() {
 }
