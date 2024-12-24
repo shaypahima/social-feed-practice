@@ -1,17 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { getPosts } from "../util/http";
 import { useState } from "react";
-import {
-  Card,
-  VStack,
-  TagGroup,
-  Tag,
-  Text,
-  Placeholder,
-  Heading,
-  Message,
-  Pagination,
-} from "rsuite";
+import { useGetPosts } from "../hooks/feedRequests";
+import SinglePost from "./SinglePost";
+import { Card, Placeholder, Heading, Message, Pagination, CardGroup } from "rsuite";
 import "../styles/Posts.css";
 
 export default function Posts() {
@@ -20,10 +10,7 @@ export default function Posts() {
     data: posts,
     isError,
     isFetching,
-  } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getPosts,
-  });
+  } = useGetPosts()
 
   if (isFetching)
     return (
@@ -44,27 +31,12 @@ export default function Posts() {
   return (
     <div className="posts-container">
       <Heading>Recent Posts</Heading>
+      <CardGroup columns={1} spacing={40}>
       {posts.map((post) => (
-        <Card className="post-card" direction="row" shaded key={post.id}>
-          <img
-            src="https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop"
-            alt="Shadow"
-          />
-          <VStack spacing={2}>
-            <Card.Header as="h5">{post.title}</Card.Header>
-            <Card.Body>{post.content}</Card.Body>
-            <Card.Footer>
-              <TagGroup>
-                <Tag size="sm">🐶 Dog</Tag>
-                <Tag size="sm">☀️ Sunny</Tag>
-                <Tag size="sm">🌈 Rainbow</Tag>
-              </TagGroup>
-              <Text muted>{post.date}</Text>
-            </Card.Footer>
-          </VStack>
-        </Card>
+        <SinglePost key={post.id} {...post} />
       ))}
-      <Pagination
+      </CardGroup>
+      <Pagination 
         prev
         last
         next
@@ -72,6 +44,8 @@ export default function Posts() {
         size="sm"
         total={20}
         limit={5}
+        
+        className="pagination"
         activePage={activePage}
         onChangePage={(page) => setActivePage(page)}
       />

@@ -1,5 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import { getLoggedInUser } from "../util/http";
 import {
   Panel,
   InlineEdit,
@@ -7,12 +5,10 @@ import {
   Stack,
 } from "rsuite";
 import "../styles/UserStatus.css";
+import useGetUser from "../hooks/authRequsets";
 
 export default function UserStatus() {
-  const { data: user, isError, isFetching } = useQuery({
-    queryKey: ["user"],
-    queryFn: getLoggedInUser,
-  });
+  const { data: user, isError, isFetching } = useGetUser()
 
   const handleSave = (value) => {
     console.log(value);

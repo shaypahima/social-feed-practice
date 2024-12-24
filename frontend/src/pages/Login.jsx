@@ -2,7 +2,7 @@ import {
   Form,
   Button,
   ButtonToolbar,
-  Message,
+
   Schema,
   FlexboxGrid,
   Heading,

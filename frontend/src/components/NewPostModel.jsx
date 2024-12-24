@@ -1,9 +1,7 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
 import { forwardRef, useState } from "react";
-import { Form, Input, Modal, Button, Stack } from "rsuite";
-import { getLoggedInUser } from "../util/http";
-import axios from "axios";
+import { Form, Input, Modal, Button, Stack, Uploader } from "rsuite";
 import "../styles/NewPostModel.css";
+import useGetUser from "../hooks/authRequsets";
 
 const Textarea = forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />
@@ -11,32 +9,30 @@ const Textarea = forwardRef((props, ref) => (
 Textarea.displayName = "Textarea";
 
 export default function NewPostModel() {
-  const { data: user, isError, isFetching } = useQuery({
-    queryKey: ["user"],
-    queryFn: getLoggedInUser,
-  });
+  const {
+    data: user,
+    isError,
+    isFetching,
+  } = useGetUser()
 
   const [open, setOpen] = useState(false);
   const [formValue, setFormValue] = useState({
     title: "",
     content: "",
+    image: "",
     author: user?.name,
     userId: user?.id,
     date: new Date().toISOString(),
   });
-  const { mutate: createPost } = useMutation({
-    mutationFn: (post) => {
-      return axios.post("/posts", post);
-    },
-  });
+
   const handleSave = () => {
     console.log(formValue);
+    //TODO save post
     setFormValue((state) => ({ ...state, title: "", content: "" }));
     handleClose();
   };
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    createPost(formValue);
     //clear values
     setFormValue((state) => ({ ...state, title: "", content: "" }));
     setOpen(false);
@@ -62,6 +58,17 @@ export default function NewPostModel() {
                 <Form.Group controlId="content-9">
                   <Form.ControlLabel>Content</Form.ControlLabel>
                   <Form.Control rows={5} name="content" accepter={Textarea} />
+                </Form.Group>
+                <Form.Group controlId="image-9">
+                  <Form.ControlLabel>Image:</Form.ControlLabel>
+                  <Form.Control
+                    name="image"
+                    accepter={Uploader}
+                    action="#"
+                    onChange={(value) => {
+                      console.log(value);
+                    }}
+                  />
                 </Form.Group>
               </Form>
             </Modal.Body>

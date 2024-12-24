@@ -1,18 +1,29 @@
 .posts-container{
-  /* center the container */
   margin: 0 auto;
   padding: 0 1rem;
-  width: 50rem;
+  width: 60rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
+}
+
+.pagination{
+  margin-top: 2rem;
+  align-self: center;
+}
+.post-card-content{
+  padding: 1rem 1rem 1rem 4px;
+  width: 100%;
+}
+
+.post-card-footer{
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
-.post-card{
-  margin-bottom: 1rem;
-
-}
 .post-card img{
   width: 200px;
   height: 200px;
