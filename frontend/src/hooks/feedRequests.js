@@ -14,11 +14,14 @@ export function useGetPosts() {
   });
 }
 
-export function useGetPostAuthor(id) {
+export function useGetPostAuthor(authorId, postId) {
   return useQuery({
-    queryKey: ["post-author", id],
+    queryKey: ["post-author", postId],
     queryFn: async () => {
-      const response = await axios.get(`http://192.168.1.100:3000/auth/user`);
+      const response = await axios.get(`http://192.168.1.100:3000/feed/post/${authorId}`);
+      if (response.status !== 200) {
+        return null;
+      }
       return response.data.author;
     },
   });

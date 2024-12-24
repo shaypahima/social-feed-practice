@@ -10,9 +10,10 @@ import {
 } from "rsuite";
 import EditIcon from "@rsuite/icons/Edit";
 import DeletePostModal from "./UI/DeletePostModal";
+import { useGetPostAuthor } from "../hooks/feedRequests";
 
-export default function SinglePost({ id, title, content, date }) {
-
+export default function SinglePost({ id,userId, title, content, date }) {
+  const { data: author} = useGetPostAuthor(userId,id);
 
   return (
     <Card className="post-card" direction="row" shaded>
@@ -27,12 +28,12 @@ export default function SinglePost({ id, title, content, date }) {
             <Avatar
               style={{ marginLeft: "1rem" }}
               circle
-              src="https://i.pravatar.cc/150?u=6"
+              src={author?.avatar}
             />
             <VStack spacing={4}>
-              <Text>{"Emily Davis"}</Text>
+              <Text>{author?.name}</Text>
               <Text muted size="sm">
-                {"Project Manager"}
+                {author?.occupation}
               </Text>
             </VStack>
           </HStack>
@@ -53,6 +54,7 @@ export default function SinglePost({ id, title, content, date }) {
 
 SinglePost.propTypes = {
   id: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired
