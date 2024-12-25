@@ -2,6 +2,7 @@ import { forwardRef, useState } from "react";
 import { Form, Input, Modal, Button, Stack, Uploader } from "rsuite";
 import "../styles/NewPostModel.css";
 import useGetUser from "../hooks/authRequsets";
+import { useCreatePost } from "../hooks/feedRequests";
 
 const Textarea = forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />
@@ -15,26 +16,27 @@ export default function NewPostModel() {
     isFetching,
   } = useGetUser()
 
+  const { mutate: createPost } = useCreatePost();
+
   const [open, setOpen] = useState(false);
   const [formValue, setFormValue] = useState({
     title: "",
     content: "",
     image: "",
-    author: user?.name,
     userId: user?.id,
-    date: new Date().toISOString(),
   });
 
   const handleSave = () => {
     console.log(formValue);
     //TODO save post
-    setFormValue((state) => ({ ...state, title: "", content: "" }));
+    createPost(formValue);
     handleClose();
   };
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => {
     //clear values
-    setFormValue((state) => ({ ...state, title: "", content: "" }));
+    setFormValue((state) => ({ ...state, title: "", content: ""}));
     setOpen(false);
   };
 

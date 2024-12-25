@@ -1,0 +1,24 @@
+[
+  {
+    "id": "e1",
+    "name": "Shay Pahima",
+    "email": "shphm4668@gmail.com",
+    "avatar": "https://github.com/shaypahima.png",
+    "occupation": "Fullstack Developer",
+    "location": "San Francisco, CA",
+    "status": "Here to be the best at fullstack!",
+    "friends": ["e2"],
+    "posts": ["p1", "p2", "p3"]
+  },
+  {
+    "id": "e2",
+    "name": "John Doe",
+    "email": "john.doe@gmail.com",
+    "avatar": "https://i.pravatar.cc/150?u=6",
+    "occupation": "Devops Engineer",
+    "location": "London, UK",
+    "status": "Here to be the best at devops!",
+    "friends": ["e1"],
+    "posts": ["p4", "p5", "p6"]
+  }
+]

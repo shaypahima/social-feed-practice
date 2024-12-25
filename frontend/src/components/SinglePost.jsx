@@ -12,13 +12,13 @@ import EditIcon from "@rsuite/icons/Edit";
 import DeletePostModal from "./UI/DeletePostModal";
 import { useGetPostAuthor } from "../hooks/feedRequests";
 
-export default function SinglePost({ id,userId, title, content, date }) {
+export default function SinglePost({ id,userId, title, content, date, image }) {
   const { data: author} = useGetPostAuthor(userId,id);
 
   return (
     <Card className="post-card" direction="row" shaded>
       <img
-        src="https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop"
+        src={image}
         alt="Shadow"
       />
 

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "p1",
+    "title": "hi mom",
+    "content": "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    "userId": "e1",
+    "date": "2024-01-01",
+    "image": "https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "p2",
+    "title": "hi dad",
+    "content": "lorem ipsum dolor sit consectetur adipisicing elit. Quisquam, quos.",
+    "userId": "e1",
+    "date": "2024-01-02",
+    "image": "https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "p3",
+    "title": "hi sis",
+    "content": "lorem ipsum dolo amet consectetur adipisicing elit. Quisquam, quos.",
+    "userId": "e1",
+    "date": "2024-01-03",
+    "image": "https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "p4",
+    "title": "hi friend",
+    "content": "lorem ipsum dolo amet consectetur adipisicing elit. Quisquam, quos.",
+    "userId": "e2",
+    "date": "2024-01-04",
+    "image": "https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "p5",
+    "title": "hi family",
+    "content": "lorem ipsum dolo amet consectetur adipisicing elit. Quisquam, quos.",
+    "userId": "e2",
+    "date": "2024-01-05",
+    "image": "https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "p6",
+    "title": "hi brother",
+    "content": "lorem ipsum dolo amet consectetur adipisicing elit. Quisquam, quos.",
+    "userId": "e2",
+    "date": "2024-01-06",
+    "image": "https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop"
+  }
+]

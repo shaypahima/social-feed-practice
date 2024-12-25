@@ -30,7 +30,8 @@ export function useGetPostAuthor(authorId, postId) {
 export function useCreatePost() {
   return useMutation({
     mutationFn: async (post) => {
-      const response = await axios.post("http://192.168.1.100:3000/feed/create-post", post);
+
+      const response = await axios.post("http://192.168.1.100:3000/feed/create-post", { ...post, image: "https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop" });
       if (response.status !== 200) {
         return null;
       }

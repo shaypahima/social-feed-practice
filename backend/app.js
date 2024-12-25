@@ -1,8 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import 'dotenv/config'
+
+
 import feedRoutes from './routes/feedRoutes.js';
 import authRoutes from './routes/authRoutes.js';
-
 
 const app = express();
 
