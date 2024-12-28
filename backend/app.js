@@ -1,14 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import feedRoutes from './routes/feedRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import 'dotenv/config'
 
 
-import feedRoutes from './routes/feedRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-
 const app = express();
 
-app.set(bodyParser.json());
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -28,6 +28,17 @@ app.use('/feed', feedRoutes);
 app.use('/auth', authRoutes);
 
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
+const startServer = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('Connected to MongoDB');
+    app.listen(3000, () => {
+      console.log('Server is running on port 3000');
+    });
+
+  } catch (error) {
+    console.error('Failed to connect to MongoDB', error);
+  }
+};
+
+startServer();

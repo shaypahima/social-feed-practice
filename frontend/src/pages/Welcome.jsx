@@ -1,6 +1,6 @@
 import "../styles/Welcome.css";
 import { Link, useNavigate } from "react-router";
-import useGetUser from "../hooks/authRequsets";
+import { useGetUser } from "../hooks/authRequests";
 import { useEffect } from "react";
 
 export default function WelcomePage() {
@@ -8,7 +8,7 @@ export default function WelcomePage() {
   const { data: user, isError, isFetching } = useGetUser();
   useEffect(() => {
     if(user !== null) navigate("/feed");
-  }, [user]);
+  }, [user, navigate]);
 
 
   return (

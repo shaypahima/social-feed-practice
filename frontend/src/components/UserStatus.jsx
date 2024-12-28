@@ -5,13 +5,18 @@ import {
   Stack,
 } from "rsuite";
 import "../styles/UserStatus.css";
-import useGetUser from "../hooks/authRequsets";
+import { useGetUser, useUpdateUserStatus } from "../hooks/authRequests";
+import { useState } from "react";
+
 
 export default function UserStatus() {
   const { data: user, isError, isFetching } = useGetUser()
+  const [status, setStatus] = useState('');
 
-  const handleSave = (value) => {
-    console.log(value);
+  const { mutate: updateUserStatus } = useUpdateUserStatus();
+
+  const handleSave = () => {
+    updateUserStatus(status);
   };
 
   return (
@@ -28,6 +33,8 @@ export default function UserStatus() {
               <InlineEdit
                 className="status-input"
                 placeholder={user.status}
+                onChange={setStatus}
+                value={status}
                 onSave={handleSave}
               >
                 <Input as="textarea" rows={5} />

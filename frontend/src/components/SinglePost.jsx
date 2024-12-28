@@ -12,8 +12,9 @@ import EditIcon from "@rsuite/icons/Edit";
 import DeletePostModal from "./UI/DeletePostModal";
 import { useGetPostAuthor } from "../hooks/feedRequests";
 
-export default function SinglePost({ id,userId, title, content, date, image }) {
-  const { data: author} = useGetPostAuthor(userId,id);
+export default function SinglePost({ _id,userId, title, content, createdAt, image }) {
+  const { data: author} = useGetPostAuthor(userId,_id);
+  const date = new Date(createdAt).toDateString();
 
   return (
     <Card className="post-card" direction="row" shaded>
@@ -43,7 +44,7 @@ export default function SinglePost({ id,userId, title, content, date, image }) {
             <Text muted>{"Posted on " + date}</Text>
             <ButtonToolbar>
               <IconButton icon={<EditIcon />} />
-              <DeletePostModal id={id} />
+              <DeletePostModal _id={_id} />
             </ButtonToolbar>
           </Card.Footer>
         </VStack>
@@ -53,9 +54,9 @@ export default function SinglePost({ id,userId, title, content, date, image }) {
 }
 
 SinglePost.propTypes = {
-  id: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired
+  createdAt: PropTypes.string.isRequired,
 };

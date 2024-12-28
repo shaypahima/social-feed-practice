@@ -11,7 +11,6 @@ export default function Posts() {
     isError,
     isFetching,
   } = useGetPosts()
-
   if (isFetching)
     return (
       <div>
@@ -33,7 +32,7 @@ export default function Posts() {
       <Heading>Recent Posts</Heading>
       <CardGroup columns={1} spacing={40}>
       {posts.map((post) => (
-        <SinglePost key={post.id} {...post} />
+        <SinglePost key={post._id} {...post} userId={post.author} />
       ))}
       </CardGroup>
       <Pagination 

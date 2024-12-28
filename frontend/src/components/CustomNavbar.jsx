@@ -3,7 +3,7 @@ import { Nav, Navbar } from "rsuite";
 import { MdLogin, MdLogout } from "react-icons/md";
 import LoadingButton from "./UI/LoadingButton";
 import { NavLink } from "react-router";
-import useGetUser from "../hooks/authRequsets";
+import { useGetUser } from "../hooks/authRequests.js";
 
 export default function CustomNavbar() {
   const { data: user, isFetching } = useGetUser();

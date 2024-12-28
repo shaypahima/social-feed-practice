@@ -1,8 +1,9 @@
 import { forwardRef, useState } from "react";
 import { Form, Input, Modal, Button, Stack, Uploader } from "rsuite";
 import "../styles/NewPostModel.css";
-import useGetUser from "../hooks/authRequsets";
-import { useCreatePost } from "../hooks/feedRequests";
+
+import { useCreatePost } from "../hooks/feedRequests.js";
+import { useGetUser } from "../hooks/authRequests.js";
 
 const Textarea = forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />

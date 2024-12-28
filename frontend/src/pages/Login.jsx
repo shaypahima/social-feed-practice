@@ -9,7 +9,7 @@ import {
 } from "rsuite";
 import { useState, useRef } from "react";
 import "../styles/Auth.css";
-import TextField from "../components/UI/TextField";
+import TextField from "../components/UI/TextField.jsx";
 
 const { StringType, NumberType } = Schema.Types;
 

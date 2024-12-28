@@ -1,7 +1,7 @@
-import UserStatus from "../components/UserStatus";
+import UserStatus from "../components/UserStatus.jsx";
 import { Container } from "rsuite";
-import NewPostModel from "../components/NewPostModel";
-import Posts from "../components/Posts";
+import NewPostModel from "../components/NewPostModel.jsx";
+import Posts from "../components/Posts.jsx";
 export default function FeedPage(){
 
   return(
