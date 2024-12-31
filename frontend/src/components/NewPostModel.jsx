@@ -16,20 +16,21 @@ export default function NewPostModel() {
     isError,
     isFetching,
   } = useGetUser()
-
-  const { mutate: createPost } = useCreatePost();
+  
+  const { 
+    mutate: createPost,
+   } = useCreatePost();
 
   const [open, setOpen] = useState(false);
   const [formValue, setFormValue] = useState({
     title: "",
     content: "",
-    image: "",
-    userId: user?.id,
+    imageUrl: "",
+    author: user?._id,
   });
 
   const handleSave = () => {
     console.log(formValue);
-    //TODO save post
     createPost(formValue);
     handleClose();
   };

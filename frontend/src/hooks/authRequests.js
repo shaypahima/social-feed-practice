@@ -1,11 +1,12 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { SERVER_URL } from "../util/constants";
 
 export function useGetUser() {
   return useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      const response = await axios.get("http://192.168.1.100:3000/auth/user");
+      const response = await axios.get(`${SERVER_URL}/auth/user`);
       if (response.status !== 200) {
         return null;
       }
@@ -17,7 +18,7 @@ export function useGetUser() {
 export function useUpdateUserStatus() {
   return useMutation({
     mutationFn: async (status) => {
-      const response = await axios.post("http://192.168.1.100:3000/auth/update-status", { status });
+      const response = await axios.post(`${SERVER_URL}/auth/update-status`, { status });
       return response.data;
     }
   })

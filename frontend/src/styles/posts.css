@@ -1,7 +1,7 @@
 .posts-container{
   margin: 0 auto;
   padding: 0 1rem;
-  width: 60rem;
+  width: 50rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,7 +13,7 @@
   align-self: center;
 }
 .post-card-content{
-  padding: 1rem 1rem 1rem 4px;
+  padding: 1rem;
   width: 100%;
 }
 

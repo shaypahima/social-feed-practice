@@ -5,9 +5,9 @@ import { useDeletePost } from "../../hooks/feedRequests";
 
 
 // eslint-disable-next-line react/prop-types
-export default function DeletePostModal({id}) {
+export default function DeletePostModal({_id}) {
   const [open, setOpen] = useState(false);
-  const { mutate: deletePost } = useDeletePost(id);
+  const { mutate: deletePost } = useDeletePost(_id);
 
   function handleClose() {
     setOpen(false);
@@ -35,8 +35,8 @@ export default function DeletePostModal({id}) {
           <Button onClick={handleClose} appearance="subtle">
             Cancel
           </Button>
-          <Button onClick={handleConfirm} appearance="primary">
-            Confirm
+          <Button color="red" onClick={handleConfirm} appearance="primary">
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

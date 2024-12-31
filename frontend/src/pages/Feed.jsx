@@ -1,6 +1,5 @@
 import UserStatus from "../components/UserStatus.jsx";
 import { Container } from "rsuite";
-import NewPostModel from "../components/NewPostModel.jsx";
 import Posts from "../components/Posts.jsx";
 export default function FeedPage(){
 
@@ -8,7 +7,6 @@ export default function FeedPage(){
     <>
       <Container>
         <UserStatus/>
-        <NewPostModel/>
         <Posts/>
       </Container>
     </>

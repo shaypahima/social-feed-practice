@@ -14,7 +14,6 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.updateStatus = async function (newStatus) {
-  console.log(newStatus);
   this.status = newStatus;
   await this.save();
 }
