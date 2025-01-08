@@ -14,8 +14,9 @@ export function useGetPosts() {
       }
       const posts = response.data.posts.map(post => ({ 
         ...post,
-        imageUrl: SERVER_URL+ '/' + post.imageUrl
+        imageUrl: SERVER_URL + post.imageUrl
       }));
+      console.log(posts[0].imageUrl, "posts");
       console.log(posts, "posts");
       return posts;
     },

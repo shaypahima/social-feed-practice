@@ -19,9 +19,10 @@ export default function NewPostModel() {
   
   const { 
     mutate: createPost,
-   } = useCreatePost();
+  } = useCreatePost();
 
   const [open, setOpen] = useState(false);
+  
   const [formValue, setFormValue] = useState({
     title: "",
     content: "",
@@ -29,10 +30,30 @@ export default function NewPostModel() {
     author: user?._id,
   });
 
+
+  
+  const [validation, setValidation] = useState({});
+
+
+  const validate = () => {
+    const { title, content } = formValue;
+    if(title.length < 3 || content.length < 10){
+      if(title.length < 3) {
+        setValidation((state) => ({ ...state, title: 'Title must be at least 3 characters' }));
+      }
+      if(content.length < 10) {
+        setValidation((state) => ({ ...state, content: 'Content must be at least 10 characters' }));
+      }
+    }else{
+      createPost(formValue);
+      handleClose();
+    }
+  }
+
+  
   const handleSave = () => {
     console.log(formValue);
-    createPost(formValue);
-    handleClose();
+    validate();
   };
   const handleOpen = () => setOpen(true);
 
@@ -53,15 +74,19 @@ export default function NewPostModel() {
               <Modal.Title>Create New Post</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form fluid onChange={setFormValue} formValue={formValue}>
+              <Form  fluid onChange={(value) => {
+               setFormValue(value) 
+               setValidation({})
+              }} formValue={formValue}>
                 <Form.Group controlId="title-9">
                   <Form.ControlLabel>Title</Form.ControlLabel>
                   <Form.Control name="title" />
-                  <Form.HelpText>Required</Form.HelpText>
+                  <Form.HelpText>{validation.title}</Form.HelpText>
                 </Form.Group>
                 <Form.Group controlId="content-9">
                   <Form.ControlLabel>Content</Form.ControlLabel>
                   <Form.Control rows={5} name="content" accepter={Textarea} />
+                  <Form.HelpText>{validation.content}</Form.HelpText>
                 </Form.Group>
                 <Form.Group controlId="image-9">
                   <Form.ControlLabel>Image:</Form.ControlLabel>
@@ -73,6 +98,7 @@ export default function NewPostModel() {
                       console.log(value);
                     }}
                   />
+                  <Form.HelpText>{validation.image}</Form.HelpText>
                 </Form.Group>
               </Form>
             </Modal.Body>
