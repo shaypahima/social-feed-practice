@@ -15,7 +15,6 @@ import { useGetPostAuthor } from "../hooks/feedRequests";
 export default function SinglePost({ _id,userId, title, content, createdAt, imageUrl }) {
   const { data: author} = useGetPostAuthor(userId,_id);
   const date = new Date(createdAt).toDateString();
-  console.log(imageUrl, "imageUrl");
 
   return (
     <Card className="post-card" direction="row" shaded>

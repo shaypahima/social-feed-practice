@@ -4,7 +4,7 @@ import { Form } from 'rsuite';
 
 const TextField = forwardRef(({ name, label, accepter, ...rest }, ref) => {
   return (
-    <Form.Group ref={ref}>
+    <Form.Group ref={ref ? ref : null} controlId={name}>
       <Form.ControlLabel>{label} </Form.ControlLabel>
       <Form.Control name={name} accepter={accepter} {...rest} />
     </Form.Group>
