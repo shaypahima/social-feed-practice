@@ -1,6 +1,8 @@
 import Post from '../model/post.js';
 import User from '../model/user.js';
 import mongoose from 'mongoose';
+import fs from 'fs';
+
 
 export const getAuthor = async (req, res, next) => {
   const { authorId } = req.params;
@@ -10,7 +12,8 @@ export const getAuthor = async (req, res, next) => {
 
 export const getFeed = async (req, res, next) => {
   const posts = await Post.find();
-  posts.forEach(post => { post.imageUrl = 'images/SpongeBob.png' });
+  posts.forEach(post => { post.imageUrl = '/images/SpongeBob.png' });
+
   res.status(200).json({ posts });
 }
 
