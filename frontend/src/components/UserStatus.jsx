@@ -15,7 +15,6 @@ export default function UserStatus() {
   const { data: user, isError, isFetching } = useGetUser();
   const [status, setStatus] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  console.log(user, "user");
   const { mutate: updateUserStatus } = useUpdateUserStatus();
 
   const handleSave = () => {

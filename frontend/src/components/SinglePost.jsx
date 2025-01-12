@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
   Card,
   VStack,
@@ -12,16 +12,21 @@ import EditIcon from "@rsuite/icons/Edit";
 import DeletePostModal from "./UI/DeletePostModal";
 import { useGetPostAuthor } from "../hooks/feedRequests";
 
-export default function SinglePost({ _id,userId, title, content, createdAt, imageUrl }) {
-  const { data: author} = useGetPostAuthor(userId,_id);
+export default function SinglePost({
+  _id,
+  userId,
+  title,
+  content,
+  createdAt,
+  imageUrl,
+}) {
+  
+  const { data: author } = useGetPostAuthor(userId, _id);
   const date = new Date(createdAt).toDateString();
 
   return (
     <Card className="post-card" direction="row" shaded>
-      <img
-        src={imageUrl}
-        alt="Shadow"
-      />
+      <img src={imageUrl} alt="Shadow" />
 
       <div className="post-card-content">
         <VStack spacing={2}>
