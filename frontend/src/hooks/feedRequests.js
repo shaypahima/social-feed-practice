@@ -2,70 +2,93 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { queryClient } from "../util/queryClient";
 import { SERVER_URL } from "../util/constants";
+import { createPostFormData } from "../util/helpers";
 
 
+// Fetch posts
 export function useGetPosts() {
   return useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
-      const response = await axios.get(`${SERVER_URL}/feed/posts`);
-      if (response.status !== 200) {
-        return null;
+      const { data, status } = await axios.get(`${SERVER_URL}/feed/posts`);
+      if (status !== 200) {
+        throw new Error("Failed to fetch posts");
       }
-      const posts = response.data.posts.map(post => ({ 
+
+      return data.posts.map((post) => ({
         ...post,
-        imageUrl: SERVER_URL + post.imageUrl
+        imageUrl: `${SERVER_URL}/${post.imageUrl}`,
       }));
-      console.log(posts[0].imageUrl, "posts");
-      console.log(posts, "posts");
-      return posts;
     },
   });
 }
 
+// Fetch post author by ID
 export function useGetPostAuthor(authorId, postId) {
   return useQuery({
     queryKey: ["post-author", postId],
     queryFn: async () => {
-      const response = await axios.get(`${SERVER_URL}/feed/post/${authorId}`);
-      if (response.status !== 200) {
-        return null;
+      const { data, status } = await axios.get(`${SERVER_URL}/feed/post/${authorId}`);
+      if (status !== 200) {
+        throw new Error("Failed to fetch post author");
       }
-      return response.data.author;
+      return data.author;
     },
   });
 }
 
+// Create a new post
 export function useCreatePost() {
   return useMutation({
     mutationFn: async (post) => {
-      const response = await axios.post(`${SERVER_URL}/feed/post`, { ...post, imageUrl: "https://images.unsplash.com/photo-1576606539605-b2a44fa58467?q=80&w=1974&auto=format&fit=crop" });
-      if (response.status !== 200) {
-        return null;
+      const formData = createPostFormData(post);
+      const { data, status } = await axios.post(`${SERVER_URL}/feed/post`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (status !== 200) {
+        throw new Error("Failed to create post");
       }
-      return response.data.post;
+      return data.post;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
-    }
+    },
   });
 }
 
-export function useUpdatePost() { }
+// Update a post (placeholder for future implementation)
+export function useUpdatePost() {
+  return useMutation({
+    mutationFn: async ({ id, updatedPost }) => {
+      const formData = createPostFormData(updatedPost);
+      const { data, status } = await axios.put(`${SERVER_URL}/feed/post/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
+      if (status !== 200) {
+        throw new Error("Failed to update post");
+      }
+      return data.post;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
+}
+
+// Delete a post by ID
 export function useDeletePost(id) {
   return useMutation({
     mutationFn: async () => {
-      console.log("delete post", id);
-      const response = await axios.delete(`${SERVER_URL}/feed/post/${id}`);
-      if (response.status !== 200) {
-        return null;
+      const { data, status } = await axios.delete(`${SERVER_URL}/feed/post/${id}`);
+      if (status !== 200) {
+        throw new Error("Failed to delete post");
       }
-      return response.data.post;
+      return data.post;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
-    }
+    },
   });
 }
-
