@@ -41,7 +41,9 @@ export function useGetPostAuthor(authorId, postId) {
 export function useCreatePost() {
   return useMutation({
     mutationFn: async (post) => {
+      console.log(post, "post");
       const formData = createPostFormData(post);
+    
       const { data, status } = await axios.post(`${SERVER_URL}/feed/post`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -54,6 +56,12 @@ export function useCreatePost() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
+    onError: (error) => {
+      console.log(error, "error");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    }
   });
 }
 

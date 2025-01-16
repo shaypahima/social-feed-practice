@@ -2,12 +2,13 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const postSchema = new Schema({
+const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   imageUrl: { type: String, required: true },
-  author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-}, { timestamps: true });
+  createdAt: { type: Date, default: Date.now },
+});
 
 const Post = mongoose.model('Post', postSchema);
 
