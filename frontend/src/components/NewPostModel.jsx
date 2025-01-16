@@ -1,12 +1,14 @@
 import { forwardRef, useRef, useState } from "react";
 import { Form, Input, Modal, Button, Stack, Uploader, Schema } from "rsuite";
 import "../styles/NewPostModel.css";
-import TextField from "./UI/TextField.jsx";
+// import TextField from "./UI/TextField.jsx";
 import { useCreatePost } from "../hooks/feedRequests.js";
 import { useGetUser } from "../hooks/authRequests.js";
 
 const { StringType } = Schema.Types;
-const model = Schema.Model({
+
+// Validation Model
+const validationModel = Schema.Model({
   title: StringType()
     .isRequired("Title is required")
     .minLength(3, "Title must be at least 3 characters"),
@@ -15,41 +17,55 @@ const model = Schema.Model({
     .minLength(5, "Content must be at least 5 characters"),
 });
 
+// Textarea Component
 const Textarea = forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />
 ));
 Textarea.displayName = "Textarea";
 
-export default function NewPostModel() {
-  const form = useRef()
+// NewPostModal Component
+export default function NewPostModal() {
+  const formRef = useRef();
+  const uploaderRef = useRef();
   const { data: user, isError, isFetching } = useGetUser();
 
+  const [image, setImage] = useState(null);
   const [formError, setFormError] = useState({});
   const [open, setOpen] = useState(false);
   const [formValue, setFormValue] = useState({
     title: "",
     content: "",
-    imageUrl: "",
     author: user?._id,
   });
 
   const { mutate: createPost } = useCreatePost();
 
   const handleSave = () => {
-    createPost(formValue);
+    createPost({ ...formValue, image });
     handleClose();
   };
+
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => {
     setFormValue((state) => ({ ...state, title: "", content: "" }));
+    setImage(null);
+    setFormError({});
     setOpen(false);
   };
 
+  const handleFileChange = (fileList) => {
+    if (fileList.length > 1) {
+      fileList.splice(1); // Keep only the first file
+    }
+    setImage(fileList[0] || null);
+  };
+
+  if (isFetching) return <p>Loading...</p>;
+  if (isError) return <p>Error fetching user data.</p>;
+
   return (
     <>
-      {isFetching && <p>Loading...</p>}
-      {isError && <p>Error</p>}
       {user && (
         <>
           <Modal open={open} onClose={handleClose} size="sm">
@@ -58,43 +74,58 @@ export default function NewPostModel() {
             </Modal.Header>
             <Modal.Body>
               <Form
-                ref={form}
+                ref={formRef}
                 fluid
-                model={model}
+                model={validationModel}
                 checkTrigger="blur"
+                formValue={formValue}
                 onChange={(value) => {
                   setFormValue(value);
                   setFormError({});
                 }}
-                formValue={formValue}
                 onCheck={setFormError}
               >
-                <TextField
-                  name="title"
-                  label="Title"
-                  // fieldError={formError.title}
-                />
-                <TextField
-                  name="content"
-                  label="Content"
-                  accepter={Textarea}
-                  rows={5}
-                  // fieldError={formError.content}
-                />
-                <TextField
-                  name="image"
-                  label="Image"
-                  accepter={Uploader}
-                  action="#"
-                />
+                <Form.Group controlId="title">
+                  <Form.ControlLabel>Title</Form.ControlLabel>
+                  <Form.Control name="title" />
+                  {formError.title && (
+                    <Form.HelpText>{formError.title}</Form.HelpText>
+                  )}
+                </Form.Group>
+
+                <Form.Group controlId="content">
+                  <Form.ControlLabel>Content</Form.ControlLabel>
+                  <Form.Control
+                    name="content"
+                    accepter={Textarea}
+                    rows={5}
+                  />
+                  {formError.content && (
+                    <Form.HelpText>{formError.content}</Form.HelpText>
+                  )}
+                </Form.Group>
+
+                <Form.Group controlId="image">
+                  <Form.ControlLabel>Image</Form.ControlLabel>
+                  <Uploader
+                    ref={uploaderRef}
+                    action=""
+                    autoUpload={false}
+                    multiple={false}
+                    onChange={handleFileChange}
+                  />
+                </Form.Group>
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button onClick={()=>{
-                if(form.current.check()){
-                  handleSave()
-                }
-              }} appearance="primary">
+              <Button
+                onClick={() => {
+                  if (formRef.current.check()) {
+                    handleSave();
+                  }
+                }}
+                appearance="primary"
+              >
                 Create
               </Button>
               <Button onClick={handleClose} appearance="subtle">
@@ -102,6 +133,7 @@ export default function NewPostModel() {
               </Button>
             </Modal.Footer>
           </Modal>
+
           <Stack className="new-post-container">
             <Button onClick={handleOpen}>Create New Post</Button>
           </Stack>

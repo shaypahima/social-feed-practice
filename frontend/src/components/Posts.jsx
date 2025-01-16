@@ -11,6 +11,7 @@ export default function Posts() {
     isError,
     isFetching,
   } = useGetPosts()
+  
   if (isFetching)
     return (
       <div>
