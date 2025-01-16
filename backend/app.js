@@ -27,6 +27,14 @@ app.use((req, res, next) => {
   next();
 });
 
+// Debugging middleware
+// app.use((req, res, next) => {
+//   console.log("Request Headers:", req.headers);
+//   console.log("Request Body:", req.body);
+//   console.log("Request File:", req.file);
+//   next();
+// });
+
 // Static files
 app.use("/images", express.static(path.join(__dirname, "images")));
 

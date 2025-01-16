@@ -5,7 +5,7 @@ export const createPostFormData = (post) => {
   formData.append("content", post.content);
   formData.append("author", post.author);
   if (post.image) {
-    formData.append("imageFile", post.image.blobFile);
+    formData.append("image", post.image.blobFile);
     formData.append("imageUrl", `images/${post.image.name}`);
   }
   return formData;
