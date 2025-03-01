@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { getFeed, getAuthor, createPost, deletePost } from "../controller/feedController.js";
+import {
+  getFeed,
+  getAuthor,
+  createPost,
+  deletePost,
+  updatePost
+} from "../controller/feedController.js";
 import { validatePost } from "../middleware/validations.js";
 
 const router = Router();
@@ -12,6 +18,8 @@ router.get("/post/:authorId", getAuthor);
 
 // Create a new post (with validation)
 router.post("/post", validatePost, createPost);
+
+router.put("/post/:id", updatePost);
 
 // Delete a post by ID
 router.delete("/post/:id", deletePost);
