@@ -41,8 +41,6 @@ export default function SinglePost({
   const [updatedPost, setUpdatedPost] = useState({ title, content,author: userId });
   const handleSave = () => {
     setEditMode(false);
-    // console.log(_id, 'id');
-    
     updatePost({id:_id, updatedPost});
   };
 
