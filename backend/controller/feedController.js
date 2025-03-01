@@ -67,7 +67,6 @@ export const updatePost = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { title, content } = req.body;
-    const imageUrl = req.file ? req.file.path.replace("\\", "/") : null;
 
     const post = await Post.findById(id);
     if (!post) {
@@ -78,7 +77,6 @@ export const updatePost = async (req, res, next) => {
 
     if (title) post.title = title;
     if (content) post.content = content;
-    if (imageUrl) post.imageUrl = imageUrl;
 
     const updatedPost = await post.save();
     res.status(200).json({ message: "Post updated successfully", post: updatedPost });
