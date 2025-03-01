@@ -1,6 +1,7 @@
 .posts-container{
   margin: 0 auto;
   padding: 0 1rem;
+
   width: 50rem;
   display: flex;
   flex-direction: column;
@@ -8,6 +9,9 @@
   
 }
 
+.post-card-post-info{
+  height: 10rem;
+}
 .pagination{
   margin-top: 2rem;
   align-self: center;
@@ -15,18 +19,23 @@
 .post-card-content{
   padding: 1rem;
   width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .post-card-footer{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 32rem;
+
 }
 
+
+
 .post-card img{
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 100%;
   object-fit: cover;
 }
 .posts-container h3{
@@ -35,3 +44,56 @@
    text-transform: uppercase;
    align-self: flex-start;
 }
+
+/* .post-card-footer-buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items: right;
+  width: 100%;
+}
+ */
+/* 
+@media (max-width: 1200px) {
+  .posts-container {
+    width: 40rem;
+  }
+
+  .post-card img {
+    width: 200px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 992px) {
+  .posts-container {
+    width: 30rem;
+  }
+
+  .post-card img {
+    width: 150px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .posts-container {
+    width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .post-card img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .posts-container h3 {
+    font-size: 1.5rem;
+  }
+
+  .post-card img {
+    width: 100%;
+    height: auto;
+  }
+} */

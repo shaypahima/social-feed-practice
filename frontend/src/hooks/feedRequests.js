@@ -69,6 +69,7 @@ export function useCreatePost() {
 export function useUpdatePost() {
   return useMutation({
     mutationFn: async ({ id, updatedPost }) => {
+
       const formData = createPostFormData(updatedPost);
       const { data, status } = await axios.put(`${SERVER_URL}/feed/post/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },

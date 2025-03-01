@@ -41,7 +41,7 @@ export default function UserStatus() {
             <Card.Body>
               <Heading
               style={{ padding: "5px" }}
-               level={6}>
+              level={6}>
                 Hello {user.name.split(" ")[0]}, your current status is:
               </Heading>
               <InlineEdit
