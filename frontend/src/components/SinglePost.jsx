@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import SaveIcon from "@rsuite/icons/Save";
 import CloseIcon from "@rsuite/icons/Close";
 
-import { useRef, useState, forwardRef } from "react";
+import {useState, forwardRef } from "react";
 import {
   Form,
   Card,
@@ -18,6 +18,7 @@ import {
 import EditIcon from "@rsuite/icons/Edit";
 import DeletePostModal from "./UI/DeletePostModal";
 import { useGetPostAuthor, useUpdatePost } from "../hooks/feedRequests";
+
 
 // Textarea Component
 const Textarea = forwardRef((props, ref) => (
@@ -44,7 +45,6 @@ export default function SinglePost({
     updatePost({id:_id, updatedPost});
   };
 
-  const formRef = useRef();
   return (
     <Card className="post-card" direction="row" shaded>
       <Image rounded src={imageUrl} alt={title} width={160} />
