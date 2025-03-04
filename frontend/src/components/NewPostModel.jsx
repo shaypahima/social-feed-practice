@@ -59,6 +59,7 @@ export default function NewPostModal() {
       fileList.splice(1); // Keep only the first file
     }
     setImage(fileList[0] || null);
+
   };
 
   if (isFetching) return <p>Loading...</p>;
