@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetPosts } from "../hooks/feedRequests";
 import SinglePost from "./SinglePost";
 import { Card, Placeholder, Heading, Message, Pagination, CardGroup } from "rsuite";
@@ -7,11 +7,17 @@ import "../styles/Posts.css";
 export default function Posts() {
   const [activePage, setActivePage] = useState(1);
   const {
-    data: posts,
+    data,
     isError,
     isFetching,
-  } = useGetPosts()
-  
+    refetch
+  } = useGetPosts(activePage)
+
+  useEffect(()=>{
+    refetch()
+  },[activePage])
+
+
   if (isFetching)
     return (
       <div>
@@ -32,7 +38,7 @@ export default function Posts() {
     <div className="posts-container">
       <Heading>Recent Posts</Heading>
       <CardGroup columns={1} spacing={40}>
-      {posts.map((post) => (
+      {data.posts.map((post) => (
         <SinglePost key={post._id} {...post} userId={post.author} />
       ))}
       </CardGroup>
@@ -42,9 +48,8 @@ export default function Posts() {
         next
         first
         size="sm"
-        total={20}
-        limit={5}
-        
+        total={data.totalItems}
+        limit={4}
         className="pagination"
         activePage={activePage}
         onChangePage={(page) => setActivePage(page)}
