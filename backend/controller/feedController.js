@@ -20,9 +20,17 @@ export const getAuthor = async (req, res, next) => {
 };
 
 export const getFeed = async (req, res, next) => {
+  const currentPage = req.query.page || 1;
+  const perPage = 4;
   try {
-    const posts = await Post.find();
-    res.status(200).json({ posts });
+    const totalItems = await Post.find().countDocuments();
+    const posts = await Post.find()
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage);
+    
+
+    res.status(200).json({ message: "Fetched posts successfully", posts, totalItems });
+    
   } catch (error) {
     next(error);
   }

@@ -6,20 +6,25 @@ import { createPostFormData } from "../util/helpers";
 
 
 // Fetch posts
-export function useGetPosts() {
+export function useGetPosts(activePage) {
   return useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
-      const { data, status } = await axios.get(`${SERVER_URL}/feed/posts`);
+      const { data, status } =
+        await axios.get(`${SERVER_URL}/feed/posts?page=${activePage}`);
       if (status !== 200) {
         throw new Error("Failed to fetch posts");
       }
-
-      return data.posts.map((post) => ({
-        ...post,
-        imageUrl: `${SERVER_URL}/${post.imageUrl}`,
-      }));
+      const response = {
+        ...data,
+        posts: data.posts.map((post) => ({
+          ...post,
+          imageUrl: `${SERVER_URL}/${post.imageUrl}`,
+        }))
+      }
+      return response
     },
+    
   });
 }
 
@@ -43,7 +48,7 @@ export function useCreatePost() {
     mutationFn: async (post) => {
       console.log(post, "post");
       const formData = createPostFormData(post);
-    
+
       const { data, status } = await axios.post(`${SERVER_URL}/feed/post`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
