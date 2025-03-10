@@ -2,7 +2,6 @@ import {
   Form,
   Button,
   ButtonToolbar,
-
   Schema,
   FlexboxGrid,
   Heading,
@@ -14,9 +13,7 @@ import TextField from "../components/UI/TextField.jsx";
 const { StringType, NumberType } = Schema.Types;
 
 const model = Schema.Model({
-  name: StringType().isRequired(),
   email: StringType().isEmail().isRequired(),
-  age: NumberType().range(18, 30),
   password: StringType().isRequired().proxy(["confirmPassword"]),
   confirmPassword: StringType().equalTo("password"),
 });
@@ -31,7 +28,7 @@ export default function LoginPage() {
     password: "",
     confirmPassword: "",
   });
-  console.log(formError, "Form Error");
+  console.error(formError, "Form Error");
   const handleSubmit = () => {
     if (!formRef.current.check()) {
       console.error("Form Error");
