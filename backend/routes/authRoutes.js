@@ -1,7 +1,15 @@
 import express from "express";
-import { getUser, updateUserStatus } from "../controller/authController.js";
+import { validateUser } from "../middleware/validations.js";
+import {
+  getUser,
+  signUp,
+  updateUserStatus,
+} from "../controller/authController.js";
+
 
 const router = express.Router();
+
+router.put('/signup', validateUser, signUp);
 
 router.get('/user', getUser);
 

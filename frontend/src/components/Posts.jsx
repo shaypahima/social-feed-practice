@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { useGetPosts } from "../hooks/feedRequests";
 import SinglePost from "./SinglePost";
-import { Card, Placeholder, Heading, Message, Pagination, CardGroup } from "rsuite";
+import {
+  Card,
+  Placeholder,
+  Heading,
+  Message,
+  Pagination,
+  CardGroup,
+} from "rsuite";
 import "../styles/Posts.css";
 
 export default function Posts() {
   const [activePage, setActivePage] = useState(1);
-  const {
-    data,
-    isError,
-    isFetching,
-    refetch
-  } = useGetPosts(activePage)
+  const { data, isError, isFetching, refetch } = useGetPosts(activePage);
 
-  useEffect(()=>{
-    refetch()
-  },[activePage])
-
+  useEffect(() => {
+    refetch();
+  }, [activePage, refetch]);
 
   if (isFetching)
     return (
@@ -38,11 +39,11 @@ export default function Posts() {
     <div className="posts-container">
       <Heading>Recent Posts</Heading>
       <CardGroup columns={1} spacing={40}>
-      {data.posts.map((post) => (
-        <SinglePost key={post._id} {...post} userId={post.author} />
-      ))}
+        {data.posts.map((post) => (
+          <SinglePost key={post._id} {...post} userId={post.author} />
+        ))}
       </CardGroup>
-      <Pagination 
+      <Pagination
         prev
         last
         next

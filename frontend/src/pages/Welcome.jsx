@@ -5,7 +5,8 @@ import { useEffect } from "react";
 
 export default function WelcomePage() {
   const navigate = useNavigate();
-  const { data: user, isError, isFetching } = useGetUser();
+  // const { data: user, isError, isFetching } = useGetUser();
+const user = null
   useEffect(() => {
     if(user !== null) navigate("/feed");
   }, [user, navigate]);

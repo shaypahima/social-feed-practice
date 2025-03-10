@@ -81,7 +81,7 @@ export default function SinglePost({
           onClick={openImage}
         />
         <Form className="post-card-content">
-          <VStack alignItems="space-between">
+          <VStack alignItems="flex-start">
             <div
               className="post-card-post-info"
               style={{ marginLeft: "1rem", marginBottom: "1rem" }}
