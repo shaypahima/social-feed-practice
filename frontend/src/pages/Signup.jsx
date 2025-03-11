@@ -9,6 +9,8 @@ import {
 import { useState, useRef } from "react";
 import "../styles/Auth.css";
 import TextField from "../components/UI/TextField.jsx";
+import { useSignup } from "../hooks/authRequests.js";
+
 
 const { StringType, NumberType } = Schema.Types;
 
@@ -32,11 +34,14 @@ export default function SignupPage() {
     confirmPassword: "",
   });
 
+  const {mutate : signup} = useSignup();
+
   const handleSubmit = () => {
     if (!formRef.current.check()) {
       console.error("Form Error");
-      return;
     }
+    signup(formValue);
+    
     console.log(formValue, "Form Value");
   };
 

@@ -10,37 +10,18 @@ import { useState, useRef } from "react";
 import "../styles/Auth.css";
 import TextField from "../components/UI/TextField.jsx";
 
-const { StringType, NumberType } = Schema.Types;
-
-const model = Schema.Model({
-  email: StringType().isEmail().isRequired(),
-  password: StringType().isRequired().proxy(["confirmPassword"]),
-  confirmPassword: StringType().equalTo("password"),
-});
 
 export default function LoginPage() {
   const formRef = useRef();
   const [formError, setFormError] = useState({});
   const [formValue, setFormValue] = useState({
-    name: "",
     email: "",
-    age: "",
     password: "",
-    confirmPassword: "",
   });
-  console.error(formError, "Form Error");
   const handleSubmit = () => {
-    if (!formRef.current.check()) {
-      console.error("Form Error");
-      return;
-    }
     console.log(formValue, "Form Value");
-  };
-
-  const handleCheckEmail = () => {
-    formRef.current.checkForField("email", (checkResult) => {
-      console.log(checkResult);
-    });
+    
+    
   };
 
   return (
@@ -58,31 +39,19 @@ export default function LoginPage() {
             onChange={setFormValue}
             onCheck={setFormError}
             formValue={formValue}
-            model={model}
           >
-            <TextField name="name" label="Username" />
             <TextField name="email" label="Email" />
-            <TextField name="age" label="Age" />
             <TextField
               name="password"
               label="Password"
               type="password"
               autoComplete="off"
             />
-            <TextField
-              name="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              autoComplete="off"
-            />
-
             <ButtonToolbar>
               <div className="auth-button-toolbar">
                 <Button appearance="primary" onClick={handleSubmit}>
-                  Submit
+                  Login
                 </Button>
-
-                <Button onClick={handleCheckEmail}>Check Email</Button>
               </div>
             </ButtonToolbar>
           </Form>

@@ -30,7 +30,15 @@ export function useLogout() {
 
 }
 
-export function useSignup() { }
+export function useSignup() {
+  return useMutation({
+    mutationFn: async (user) => {
+      const response = await axios.put(`${SERVER_URL}/auth/signup`, user);
+      return response.data;
+    }
+  })
+
+}
 
 export function useUpdateUser() { }
 
