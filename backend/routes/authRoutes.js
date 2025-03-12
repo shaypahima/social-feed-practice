@@ -3,6 +3,7 @@ import { validateUser } from "../middleware/validations.js";
 import {
   getUser,
   signUp,
+  login,
   updateUserStatus,
 } from "../controller/authController.js";
 
@@ -10,6 +11,8 @@ import {
 const router = express.Router();
 
 router.put('/signup', validateUser, signUp);
+
+router.post('/login', login);
 
 router.get('/user', getUser);
 

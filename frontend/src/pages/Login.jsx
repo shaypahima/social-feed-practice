@@ -1,27 +1,25 @@
-import {
-  Form,
-  Button,
-  ButtonToolbar,
-  Schema,
-  FlexboxGrid,
-  Heading,
-} from "rsuite";
-import { useState, useRef } from "react";
+import { Form, Button, ButtonToolbar, FlexboxGrid, Heading } from "rsuite";
+import { useState, useRef, useContext} from "react";
 import "../styles/Auth.css";
 import TextField from "../components/UI/TextField.jsx";
+import { AuthContext } from "../context/authContext.jsx";
+import { useNavigate } from "react-router";
 
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const { loginHandler ,isError, error, isSuccess,data} = useContext(AuthContext);
   const formRef = useRef();
-  const [formError, setFormError] = useState({});
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
   });
   const handleSubmit = () => {
-    console.log(formValue, "Form Value");
-    
-    
+    loginHandler(formValue);
+    if(isSuccess){
+      console.log(data)
+      navigate("/feed")
+    }
   };
 
   return (
@@ -34,12 +32,7 @@ export default function LoginPage() {
               <strong>Error!</strong> {formError?.email}
             </Message>
           )} */}
-          <Form
-            ref={formRef}
-            onChange={setFormValue}
-            onCheck={setFormError}
-            formValue={formValue}
-          >
+          <Form ref={formRef} onChange={setFormValue} formValue={formValue}>
             <TextField name="email" label="Email" />
             <TextField
               name="password"
@@ -54,6 +47,7 @@ export default function LoginPage() {
                 </Button>
               </div>
             </ButtonToolbar>
+            {isError && <p>{error.message}</p>}
           </Form>
         </FlexboxGrid.Item>
       </FlexboxGrid>

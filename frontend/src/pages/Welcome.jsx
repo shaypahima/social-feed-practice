@@ -1,21 +1,22 @@
 import "../styles/Welcome.css";
 import { Link, useNavigate } from "react-router";
-import { useGetUser } from "../hooks/authRequests";
-import { useEffect } from "react";
+
+import { useEffect, useContext } from "react";
+import { AuthContext } from "../context/authContext.jsx";
 
 export default function WelcomePage() {
   const navigate = useNavigate();
-  // const { data: user, isError, isFetching } = useGetUser();
-const user = null
+  const {isAuth} = useContext(AuthContext);
+
   useEffect(() => {
-    if(user !== null) navigate("/feed");
-  }, [user, navigate]);
+    if(isAuth) navigate("/feed");
+  }, [isAuth, navigate]);
 
 
   return (
     <div className="welcome-container">
       <div className="welcome-content">
-        <h1 className="welcome-title">Welcome to ConnectHub</h1>
+        <h1 className="welcome-title">Welcome to Orbit Social Network</h1>
         <p className="welcome-subtitle">
           Connect, Share, and Engage with People Around the World
         </p>

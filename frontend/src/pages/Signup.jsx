@@ -34,7 +34,7 @@ export default function SignupPage() {
     confirmPassword: "",
   });
 
-  const {mutate : signup} = useSignup();
+  const {mutate : signup, isError, isSuccess, error} = useSignup();
 
   const handleSubmit = () => {
     if (!formRef.current.check()) {
@@ -95,6 +95,10 @@ export default function SignupPage() {
               </div>
             </ButtonToolbar>
           </Form>
+          <div>
+          {isError && <p>{error.message}</p>}
+          {isSuccess && <p>Signup successful</p>}
+          </div>
         </FlexboxGrid.Item>
       </FlexboxGrid>
     </div>

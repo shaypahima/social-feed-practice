@@ -24,7 +24,15 @@ export function useUpdateUserStatus() {
   })
 }
 
-export function useLogin() { }
+export function useLogin() {
+  return useMutation({
+    mutationFn: async (user) => {
+      const response = await axios.post(`${SERVER_URL}/auth/login`, user);
+      return response.data;
+    }
+    
+  })
+}
 
 export function useLogout() {
 
