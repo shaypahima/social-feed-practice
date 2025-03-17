@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   InlineEdit,
   Input,
@@ -11,14 +12,19 @@ import { useGetUser, useUpdateUserStatus } from "../hooks/authRequests";
 import { useState } from "react";
 import NewPostModel from "./NewPostModel";
 
-export default function UserStatus() {
-  const { data: user, isError, isFetching } = useGetUser();
+export default function UserStatus({userId, token}) {
+  
+  
+  const { data: user, isError, isFetching } = useGetUser(userId, token);
+
   const [status, setStatus] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const { mutate: updateUserStatus } = useUpdateUserStatus();
 
   const handleSave = () => {
-    updateUserStatus(status);
+    console.log("UserStatus -> token", token);
+    console.log("UserStatus -> status", status);
+    updateUserStatus({status,token});
     setIsEditing(false);
   };
 

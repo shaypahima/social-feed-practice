@@ -17,8 +17,12 @@ export function useGetUser() {
 
 export function useUpdateUserStatus() {
   return useMutation({
-    mutationFn: async (status) => {
-      const response = await axios.post(`${SERVER_URL}/auth/update-status`, { status });
+    mutationFn: async ({token, status}) => {
+
+      
+      const response = await axios.post(`${SERVER_URL}/auth/update-status`, { status }, {
+        headers: { Authorization : `Bearer ${token}` }
+      });
       return response.data;
     }
   })
@@ -30,7 +34,7 @@ export function useLogin() {
       const response = await axios.post(`${SERVER_URL}/auth/login`, user);
       return response.data;
     }
-    
+
   })
 }
 

@@ -14,11 +14,41 @@ export const AuthContext = createContext({
   isSuccess: false,
   error: null,
   authData: null,
+  isLoadingLogin: false,
+  init: () => {}
 });
 
 export default function AuthProvider({children}) {
   const [isAuth, setIsAuth] = useState(false);
-  const { mutate: login, isError, error, isSuccess, data: authData , reset, isPending} = useLogin();
+  const [isPending, setIsPending] = useState(false);
+  
+  const { mutate: login, isError, error, isSuccess, data: authData , reset, isPending : isLoadingLogin} = useLogin();
+
+  const init = () => {
+    setIsPending(true);
+    const token = localStorage.getItem("token");
+    const expiryDate = localStorage.getItem("expiryDate");
+    const userId = localStorage.getItem("userId");
+  
+
+    if (!token || !expiryDate) {
+      setIsAuth(false);
+      setIsPending(false);
+      return;
+    }
+
+    if (new Date(expiryDate) <= new Date()) {
+      setIsAuth(false);
+      setIsPending(false);
+      logoutHandler();
+      return;
+    }
+
+    const remainingMilliseconds = new Date(expiryDate).getTime() - new Date().getTime();
+    setIsAuth(true);
+    setAutoLogout(remainingMilliseconds);
+    setIsPending(false);
+  }
 
   const setAutoLogout = (milliseconds) => {
     setTimeout(() => {
@@ -59,10 +89,12 @@ export default function AuthProvider({children}) {
       logoutHandler,
       isAuth,
       isPending,
+      isLoadingLogin,
       isError,
       isSuccess,
       error,
-      authData
+      authData,
+      init
     }}>
       {children}
     </AuthContext.Provider>

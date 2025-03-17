@@ -77,11 +77,24 @@ export const login = async (req, res, next) => {
 
 
 export const updateUserStatus = async (req, res, next) => {
-
   const { status } = req.body;
+  const { userId } = req;
   //logged in user
-  const user = await User.findOne();
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      throw error;
+    }
+    user.status = status;
+    await user.save();
+    res.status(200).json({ message: 'User status updated' });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
 
-  await user.updateStatus(status);
-  res.status(200).json({ message: 'Status updated' });
 }

@@ -5,16 +5,16 @@ import { useDeletePost } from "../../hooks/feedRequests";
 
 
 // eslint-disable-next-line react/prop-types
-export default function DeletePostModal({_id}) {
+export default function DeletePostModal({_id,token}) {
   const [open, setOpen] = useState(false);
-  const { mutate: deletePost } = useDeletePost(_id);
+  const { mutate: deletePost } = useDeletePost();
 
   function handleClose() {
     setOpen(false);
   }
 
   function handleConfirm() {
-    deletePost();
+    deletePost(_id, token);
     handleClose();
   }
 
