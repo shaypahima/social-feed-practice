@@ -34,6 +34,7 @@ export default function SinglePost({
   content,
   createdAt,
   imageUrl,
+  token,
 }) {
   const { data: author } = useGetPostAuthor(userId, _id);
   const { mutate: updatePost } = useUpdatePost();
@@ -49,7 +50,7 @@ export default function SinglePost({
   });
   const handleSave = () => {
     setEditMode(false);
-    updatePost({ id: _id, updatedPost });
+    updatePost({ id: _id, updatedPost ,token});
   };
 
   const openImage = () => {
@@ -146,7 +147,7 @@ export default function SinglePost({
                       icon={<SaveIcon />}
                       onClick={handleSave}
                     />
-                    <DeletePostModal _id={_id} />
+                    <DeletePostModal _id={_id} token={token}/>
                     <IconButton
                       onClick={() => setEditMode((prev) => !prev)}
                       icon={<CloseIcon />}
@@ -169,4 +170,5 @@ SinglePost.propTypes = {
   content: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   imageUrl: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };

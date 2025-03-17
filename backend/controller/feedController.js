@@ -1,6 +1,6 @@
 import Post from '../model/post.js';
 import User from '../model/user.js';
-import mongoose from 'mongoose';
+
 // import { validationResult } from 'express-validator';
 
 
@@ -20,6 +20,12 @@ export const getAuthor = async (req, res, next) => {
 };
 
 export const getFeed = async (req, res, next) => {
+  const userId = req.userId;
+  if(!userId){
+    const error = new Error('Not authenticated.');
+    error.statusCode = 401;
+    throw error;
+  }
   const currentPage = req.query.page || 1;
   const perPage = 4;
   try {
@@ -39,10 +45,17 @@ export const getFeed = async (req, res, next) => {
 
 export const createPost = async (req, res, next) => {
   try {
-    const { title, content, author } = req.body;
+    const author = req.userId;
+    if(!author){
+      const error = new Error('Not authenticated.');
+      error.statusCode = 401;
+      throw error;
+    }
+
+    const { title, content } = req.body;
     const imageUrl = req.file ? req.file.path.replace("\\", "/") : null;
 
-    if (!title || !content || !author || !imageUrl) {
+    if (!title || !content || !imageUrl) {
       const error = new Error("Missing required fields");
       error.statusCode = 422;
       throw error;
@@ -73,14 +86,25 @@ export const createPost = async (req, res, next) => {
 
 export const updatePost = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const author = req.userId;
+    if(!author){
+      const error = new Error('Not authenticated.');
+      error.statusCode = 401;
+      throw error;
+    }
+    const { id : postId } = req.params;
     const { title, content } = req.body;
 
-    const post = await Post.findById(id);
+    const post = await Post.findById(postId);
     if (!post) {
       const error = new Error("Post not found");
       error.statusCode = 404;
       throw error;
+    }
+    if(post.author.toString() !== author){
+      const error = new Error('Not authorized');
+      error.statusCode = 403;
+      throw error
     }
 
     if (title) post.title = title;
@@ -96,16 +120,30 @@ export const updatePost = async (req, res, next) => {
 
 export const deletePost = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const author = req.userId;
+    if(!author){
+      const error = new Error('Not authenticated.');
+      error.statusCode = 401;
+      throw error
+    }
 
-    const post = await Post.findById(id);
+    const { id : postId } = req.params;
+
+    const post = await Post.findById(postId);
     if (!post) {
       const error = new Error("Post not found");
       error.statusCode = 404;
       throw error;
     }
 
-    await Post.findByIdAndDelete(id);
+    if(post.author.toString() !== author){
+      const error = new Error('Not authorized');
+      error.statusCode = 403;
+      throw error
+    }
+
+
+    await Post.findByIdAndDelete(postId);
     res.status(200).json({ message: "Post deleted successfully", post });
   } catch (error) {
     next(error);

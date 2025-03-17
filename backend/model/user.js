@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
+import 'dotenv/config'
+
 
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  avatar: { type: String, required: true },
+  avatar: { type: String, required: true, default: process.env.DEFAULT_AVATAR },
   email: { type: String, required: true },
   password: { type: String, required: true },
   name: { type: String, required: true },

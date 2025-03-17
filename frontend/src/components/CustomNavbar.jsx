@@ -3,10 +3,12 @@ import { Nav, Navbar } from "rsuite";
 import { MdLogin, MdLogout } from "react-icons/md";
 import LoadingButton from "./UI/LoadingButton";
 import { NavLink } from "react-router";
-import { useGetUser } from "../hooks/authRequests.js";
+
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext.jsx";
 
 export default function CustomNavbar() {
-  const { data: user, isFetching } = useGetUser();
+  const { isAuth, isPending, logoutHandler } = useContext(AuthContext);
 
   return (
     <>
@@ -18,9 +20,9 @@ export default function CustomNavbar() {
           </Nav.Item>
         </Nav>
         <Nav pullRight>
-          {isFetching && <Nav.Item as={LoadingButton}></Nav.Item>}
-          {user && <Nav.Item icon={<MdLogout />}>Logout</Nav.Item>}
-          {!user && !isFetching && (
+          {isPending && <Nav.Item as={LoadingButton}></Nav.Item>}
+          {isAuth && <Nav.Item onClick={logoutHandler} icon={<MdLogout />}>Logout</Nav.Item>}
+          {!isAuth && !isPending && (
             <>
               <Nav.Item as={NavLink} to="/login" icon={<MdLogin />}>
                 Login

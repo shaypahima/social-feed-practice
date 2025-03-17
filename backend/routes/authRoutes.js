@@ -1,9 +1,10 @@
 import express from "express";
 import { validateUser } from "../middleware/validations.js";
+import isAuth from "../middleware/is-auth.js";
 import {
-  getUser,
+  getUserData,
   signUp,
-  updateUserStatus,
+  login,
 } from "../controller/authController.js";
 
 
@@ -11,9 +12,10 @@ const router = express.Router();
 
 router.put('/signup', validateUser, signUp);
 
-router.get('/user', getUser);
+router.post('/login', login);
 
-router.post('/update-status', updateUserStatus);
+router.get('/user-data', isAuth, getUserData);
+
 
 export default router;
 

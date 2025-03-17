@@ -6,12 +6,12 @@ import { createPostFormData } from "../util/helpers";
 
 
 // Fetch posts
-export function useGetPosts(activePage) {
+export function useGetPosts(activePage, token) {
   return useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
       const { data, status } =
-        await axios.get(`${SERVER_URL}/feed/posts?page=${activePage}`);
+        await axios.get(`${SERVER_URL}/feed/posts?page=${activePage}`, { headers: { Authorization: `Bearer ${token}` } });
       if (status !== 200) {
         throw new Error("Failed to fetch posts");
       }
@@ -24,7 +24,7 @@ export function useGetPosts(activePage) {
       }
       return response
     },
-    
+
   });
 }
 
@@ -45,12 +45,15 @@ export function useGetPostAuthor(authorId, postId) {
 // Create a new post
 export function useCreatePost() {
   return useMutation({
-    mutationFn: async (post) => {
-      console.log(post, "post");
+    mutationFn: async ({ post, token }) => {
+
       const formData = createPostFormData(post);
 
       const { data, status } = await axios.post(`${SERVER_URL}/feed/post`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        },
       });
 
       if (status !== 200) {
@@ -73,11 +76,11 @@ export function useCreatePost() {
 // Update a post (placeholder for future implementation)
 export function useUpdatePost() {
   return useMutation({
-    mutationFn: async ({ id, updatedPost }) => {
+    mutationFn: async ({ id, updatedPost, token }) => {
 
       const formData = createPostFormData(updatedPost);
       const { data, status } = await axios.put(`${SERVER_URL}/feed/post/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
       });
 
       if (status !== 200) {
@@ -92,10 +95,10 @@ export function useUpdatePost() {
 }
 
 // Delete a post by ID
-export function useDeletePost(id) {
+export function useDeletePost() {
   return useMutation({
-    mutationFn: async () => {
-      const { data, status } = await axios.delete(`${SERVER_URL}/feed/post/${id}`);
+    mutationFn: async (id, token) => {
+      const { data, status } = await axios.delete(`${SERVER_URL}/feed/post/${id}`, { headers: { Authorization: `Bearer ${token}` } });
       if (status !== 200) {
         throw new Error("Failed to delete post");
       }

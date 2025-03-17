@@ -11,9 +11,9 @@ import {
 } from "rsuite";
 import "../styles/Posts.css";
 
-export default function Posts() {
+export default function Posts({ userId, token }) {
   const [activePage, setActivePage] = useState(1);
-  const { data, isError, isFetching, refetch } = useGetPosts(activePage);
+  const { data, isError, isFetching, refetch } = useGetPosts(activePage, token);
 
   useEffect(() => {
     refetch();
@@ -40,7 +40,12 @@ export default function Posts() {
       <Heading>Recent Posts</Heading>
       <CardGroup columns={1} spacing={40}>
         {data.posts.map((post) => (
-          <SinglePost key={post._id} {...post} userId={post.author} />
+          <SinglePost
+            key={post._id}
+            {...post}
+            token={token}
+            userId={post.author}
+          />
         ))}
       </CardGroup>
       <Pagination
