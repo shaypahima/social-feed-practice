@@ -4,13 +4,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config'
 
-
-
 export const signUp = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
-
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const errors = validationResult(req);
@@ -34,12 +31,24 @@ export const signUp = async (req, res, next) => {
     }
     next(error);
   }
-
 }
 
-export const getUser = async (req, res, next) => {
-  const user = await User.findOne();
-  res.status(200).json({ user });
+export const getUserData = async (req, res, next) => {
+  const { userId } = req;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      throw error;
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
 }
 
 export const login = async (req, res, next) => {

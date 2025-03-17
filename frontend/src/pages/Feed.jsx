@@ -23,7 +23,7 @@ export default function FeedPage() {
   return (
     <>
       <Container>
-        <UserStatus userId={userId} token={token} />
+        <UserStatus token={token} />
         <Posts userId={userId} token={token} />
       </Container>
     </>

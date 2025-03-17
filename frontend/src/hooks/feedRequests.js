@@ -45,12 +45,15 @@ export function useGetPostAuthor(authorId, postId) {
 // Create a new post
 export function useCreatePost() {
   return useMutation({
-    mutationFn: async (post) => {
-      console.log(post, "post");
+    mutationFn: async ({ post, token }) => {
+
       const formData = createPostFormData(post);
 
       const { data, status } = await axios.post(`${SERVER_URL}/feed/post`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        },
       });
 
       if (status !== 200) {

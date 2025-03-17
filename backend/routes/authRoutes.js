@@ -2,10 +2,9 @@ import express from "express";
 import { validateUser } from "../middleware/validations.js";
 import isAuth from "../middleware/is-auth.js";
 import {
-  getUser,
+  getUserData,
   signUp,
   login,
-  updateUserStatus,
 } from "../controller/authController.js";
 
 
@@ -15,10 +14,8 @@ router.put('/signup', validateUser, signUp);
 
 router.post('/login', login);
 
-//temporary route to get user
-router.get('/user', getUser);
+router.get('/user-data', isAuth, getUserData);
 
-router.post('/update-status', isAuth, updateUserStatus);
 
 export default router;
 

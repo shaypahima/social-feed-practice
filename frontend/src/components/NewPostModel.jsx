@@ -3,7 +3,7 @@ import { Form, Input, Modal, Button, Stack, Uploader, Schema } from "rsuite";
 import "../styles/NewPostModel.css";
 // import TextField from "./UI/TextField.jsx";
 import { useCreatePost } from "../hooks/feedRequests.js";
-import { useGetUser } from "../hooks/authRequests.js";
+
 
 const { StringType } = Schema.Types;
 
@@ -24,10 +24,9 @@ const Textarea = forwardRef((props, ref) => (
 Textarea.displayName = "Textarea";
 
 // NewPostModal Component
-export default function NewPostModal() {
+export default function NewPostModal({token, userId}) {
   const formRef = useRef();
   const uploaderRef = useRef();
-  const { data: user, isError, isFetching } = useGetUser();
 
   const [image, setImage] = useState(null);
   const [formError, setFormError] = useState({});
@@ -35,13 +34,14 @@ export default function NewPostModal() {
   const [formValue, setFormValue] = useState({
     title: "",
     content: "",
-    author: user?._id,
+    author: userId,
   });
 
-  const { mutate: createPost } = useCreatePost();
+  const { mutate: createPost , isSuccess } = useCreatePost();
 
   const handleSave = () => {
-    createPost({ ...formValue, image });
+    const newPost = { ...formValue, image };
+    createPost({newPost, token });
     handleClose();
   };
 
@@ -62,13 +62,9 @@ export default function NewPostModal() {
 
   };
 
-  if (isFetching) return <p>Loading...</p>;
-  if (isError) return <p>Error fetching user data.</p>;
 
   return (
     <>
-      {user && (
-        <>
           <Modal open={open} onClose={handleClose} size="sm">
             <Modal.Header>
               <Modal.Title>Create New Post</Modal.Title>
@@ -138,8 +134,7 @@ export default function NewPostModal() {
           <Stack className="new-post-container">
             <Button onClick={handleOpen}>Create New Post</Button>
           </Stack>
-        </>
-      )}
+
     </>
   );
 }
